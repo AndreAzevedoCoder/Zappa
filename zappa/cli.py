@@ -190,7 +190,7 @@ class ZappaCLI:
         Main function.
         Parses command, load settings and dispatches accordingly.
         """
-
+        
         desc = "Zappa - Deploy Python applications to AWS Lambda" " and API Gateway.\n"
         parser = argparse.ArgumentParser(description=desc)
         parser.add_argument(
@@ -2452,6 +2452,9 @@ class ZappaCLI:
             )
         else:
             exclude = self.stage_config.get("exclude", [])
+
+            asgi = self.stage_config.get("asgi", False)
+            settings_s += "ASGI=%s" % asgi
 
             # Create a single zip that has the handler and application
             self.zip_path = self.zappa.create_lambda_zip(  # type: ignore[attr-defined]
