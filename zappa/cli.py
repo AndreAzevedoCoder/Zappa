@@ -2453,8 +2453,8 @@ class ZappaCLI:
         else:
             exclude = self.stage_config.get("exclude", [])
 
-            asgi = self.stage_config.get("asgi", False)
-            settings_s += "ASGI=%s" % asgi
+            # asgi = self.stage_config.get("asgi", False)
+            # settings_s += "ASGI=%s" % asgi
 
             # Create a single zip that has the handler and application
             self.zip_path = self.zappa.create_lambda_zip(  # type: ignore[attr-defined]
