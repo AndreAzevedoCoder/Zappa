@@ -528,7 +528,7 @@ class LambdaHandler:
             time_start = datetime.datetime.now()
 
             # This is a normal HTTP request
-            if event.get('httpMethod', None) and not settings.ASGI:
+            if event.get('httpMethod', None):
                 script_name = ""
                 is_elb_context = False
                 headers = merge_headers(event)
