@@ -11,3 +11,11 @@ def get_django_wsgi(settings_module):
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
 
     return get_wsgi_application()
+
+
+def get_django_asgi(settings_module):
+    from django.core.asgi import get_asgi_application
+
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
+
+    return get_asgi_application()
