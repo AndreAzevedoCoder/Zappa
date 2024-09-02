@@ -151,11 +151,10 @@ class LambdaHandler:
                 wsgi_app_function = get_django_wsgi(self.settings.DJANGO_SETTINGS)
                 self.trailing_slash = True
 
-            if self.settings.ASGI_APPLICATION:
-                from zappa.ext.django_zappa import get_django_asgi
-                self.asgi_app = get_django_asgi(self.settings.DJANGO_SETTINGS)
-            else:
-                self.wsgi_app = ZappaWSGIMiddleware(wsgi_app_function)
+            from zappa.ext.django_zappa import get_django_asgi
+            self.asgi_app = get_django_asgi(self.settings.DJANGO_SETTINGS)
+
+            self.wsgi_app = ZappaWSGIMiddleware(wsgi_app_function)
 
     def load_remote_project_archive(self, project_zip_path):
         """
