@@ -621,10 +621,12 @@ class LambdaHandler:
                     response_time_us = delta.total_seconds() * 1_000_000  # convert to microseconds
                     response.content = response.data
                     common_log(environ, response, response_time=response_time_us)
-
+                    print(f"REGULAR RESPONSE: {zappa_returndict}")
                     return zappa_returndict
             else:
-                return Mangum(self.asgi_app)(event, context)
+                websocket_response = Mangum(self.asgi_app)(event, context)
+                print(f"WEBSOCKET RESPONSE: {websocket_response}")
+                return websocket_response
         except Exception as e:  # pragma: no cover
             # Print statements are visible in the logs either way
             print(e)
