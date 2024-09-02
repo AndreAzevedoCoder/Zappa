@@ -151,9 +151,11 @@ class LambdaHandler:
                 wsgi_app_function = get_django_wsgi(self.settings.DJANGO_SETTINGS)
                 self.trailing_slash = True
 
-            if not self.settings.ASGI:
+            if self.settings.ASGI:
+                from zappa.ext.django_zappa import get_django_asgi
+                self.asgi_app = get_django_asgi(self.settings.DJANGO_SETTINGS)
+            else:
                 self.wsgi_app = ZappaWSGIMiddleware(wsgi_app_function)
-            self.wsgi_app = wsgi_app_function
 
     def load_remote_project_archive(self, project_zip_path):
         """
@@ -621,8 +623,8 @@ class LambdaHandler:
                     common_log(environ, response, response_time=response_time_us)
 
                     return zappa_returndict
-            elif event.get('httpMethod', None) and settings.ASGI:
-                return Mangum(self.wsgi_app)(event, context)
+            else:
+                return Mangum(self.asgi_app)(event, context)
         except Exception as e:  # pragma: no cover
             # Print statements are visible in the logs either way
             print(e)
