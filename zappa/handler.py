@@ -151,7 +151,7 @@ class LambdaHandler:
                 wsgi_app_function = get_django_wsgi(self.settings.DJANGO_SETTINGS)
                 self.trailing_slash = True
 
-            if self.settings.ASGI:
+            if self.settings.ASGI_APPLICATION:
                 from zappa.ext.django_zappa import get_django_asgi
                 self.asgi_app = get_django_asgi(self.settings.DJANGO_SETTINGS)
             else:
